@@ -1,0 +1,29 @@
+{
+  "dataset": "B_CLEAN",
+  "split": "S1",
+  "protocol": "P1",
+  "model": "extratrees",
+  "seed": 2040,
+  "phase": "PHASE3_SYN_CONTROL",
+  "notes": "P1: Global imputation leakage only (median/mode) applied BEFORE split; scaling remains fold-safe.",
+  "global_num_imputer_stats": {
+    "Age": 53.35,
+    "Hematocrit": 41.66,
+    "TotalProtein": 6.89,
+    "WBV": 5.821065,
+    "TG0h": 838.525,
+    "TCR": 52.90178256238221,
+    "HDL": 50.2,
+    "LDL": 129.5,
+    "BMI": 24.0
+  },
+  "global_cat_imputer_fill": {
+    "Sex": "Female"
+  },
+  "global_scaler_mean": null,
+  "global_scaler_scale": null,
+  "p3_k": null,
+  "p3_selected_idx": null,
+  "p3_feature_names": null,
+  "p3_declared_leakage": null
+}

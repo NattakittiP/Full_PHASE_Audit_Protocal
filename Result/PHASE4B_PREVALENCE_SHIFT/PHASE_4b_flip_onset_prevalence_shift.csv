@@ -1,0 +1,3 @@
+split,baseline_seed,baseline_winner,flip_begins_at_target_prev
+S1,1001,xgb,0.1
+S2,1001,xgb,0.2
