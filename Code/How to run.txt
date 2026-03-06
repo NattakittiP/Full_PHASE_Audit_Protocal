@@ -1,0 +1,8 @@
+How to run
+
+conda create -n jcsse python=3.10 -y
+conda activate jcsse
+conda install numpy pandas scikit-learn -y
+pip install tqdm xgboost
+cd "E:\Ohm_files\Research\IEEE JCSSE 2026\Code"
+python (files name)
