@@ -1,0 +1,12 @@
+column,reason
+label24h,hard_extra_drop_cols
+label48h,hard_extra_drop_cols
+patientunitstayid,id_like_exact
+uniquepid,id_like_exact
+unitvisitnumber,id_like_exact
+wardid,id_like_pattern:.*id$
+hospitaldischargelocation,strict_post_outcome_pattern:discharge
+hospitaldischargestatus,strict_post_outcome_pattern:discharge
+hospitaldischargeyear,strict_post_outcome_pattern:discharge
+unitdischargelocation,strict_post_outcome_pattern:discharge
+unitdischargeoffset_num,strict_post_outcome_pattern:discharge
