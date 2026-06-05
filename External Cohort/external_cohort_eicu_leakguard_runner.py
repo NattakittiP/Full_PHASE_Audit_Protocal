@@ -1,24 +1,3 @@
-# ============================================================
-# external_cohort_eicu_leakguard_runner.py — External Cohort Runner (eICU)
-# (Leakage-Guarded Edition) — "กัน Data Leakage แบบขั้นสุด"
-#
-# Locked to the SAME protocol semantics as phase1_3_main_audit_runner.py
-#
-# Adds STRICT leakage defenses at load time (feature hygiene only; no label-peeking):
-#   (A) Drop known post-outcome / discharge-derived columns (name-based, deterministic)
-#   (B) Drop obvious identifiers (ID-like, high-cardinality near-unique columns)
-#   (C) HARD BLOCK: prevent "label-as-feature leakage" by dropping ALL columns
-#       that look like label siblings (e.g., label24h/label48h/label_24h/label48hours)
-#       except the chosen label_used.
-#   (D) Optionally keep ONLY early-available features via prefix/regex rules (off by default)
-#   (E) Save a leakage_guard_report.csv in results_dir (what was dropped & why)
-#   (F) PRE-FLIGHT mode: run guard only (no training) to avoid wasting time
-#
-# NOTE:
-# - We DO NOT use y to decide which features to drop (no label peeking).
-# - Preflight checks are name-based only.
-# ============================================================
-
 import os
 import json
 import argparse
