@@ -1,40 +1,3 @@
-# ------------------------------------------------------------
-# PHASE 4b — Prevalence / Label-Shift Severity Sweep (Dataset A)
-#
-# Goal (Q1-hardening):
-#   Stress-test model selection stability under TRAINING prevalence shift
-#   (a label-prior / prevalence shift), while evaluating on the untouched
-#   outer-test distribution.
-#
-# Design requirements (must match Phase 1–4a runner + Phase4a sweep):
-#   - Leakage-controlled evaluation:
-#       * preprocessing occurs inside folds (P0 style)
-#       * calibration split happens BEFORE hyperparameter tuning
-#       * tuning uses ONLY train_sub (not cal_sub, not test)
-#       * fit on train_sub, calibrate on cal_sub
-#   - Winner ranking key CONSISTENT with Phase 1–3:
-#       AUROC (desc), then AP (desc), then Brier (asc)
-#   - Uses the SAME helper functions imported from your runner:
-#       load_dataset_A, build_preprocessor, make_model_and_grid,
-#       fit_best_model_nested, calibration_split_indices, PrefitCalibrator,
-#       predict_proba_safe, get_outer
-#
-# Outputs (mirrors Phase4a structure):
-#   OUT_DIR/
-#     prevalence_shift_fold_metrics.csv
-#     prevalence_shift_summary_by_model.csv
-#     prevalence_shift_winner_by_seed.csv
-#     robustness_envelope_prevalence_shift.csv
-#     flip_onset_prevalence_shift.csv
-#
-# Notes:
-#   - This script runs on Dataset A by default (same as Phase1–4a).
-#   - Shift is applied ONLY to the outer-train fold (before cal split).
-#   - For S2 (GroupKFold), outer split still enforces group separation
-#     between train/test. Inside outer-train, we subsample instances to
-#     match target prevalence; cal split remains group-aware via the runner.
-# ------------------------------------------------------------
-
 import os
 import json
 from dataclasses import dataclass
@@ -417,6 +380,9 @@ def build_envelope(
 # MAIN SWEEP
 # ============================================================
 def main():
+    import random
+    random.seed(0)
+    np.random.seed(0)
     X, y, groups, num_cols, cat_cols = load_dataset_A()
 
     all_fold_metrics = []
