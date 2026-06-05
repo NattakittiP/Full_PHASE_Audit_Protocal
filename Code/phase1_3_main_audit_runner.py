@@ -1,23 +1,3 @@
-# jcsse_audit_runner.py (REV2) — Locked to JCSSE-Idea + fixes requested (100%)
-#
-# Fixes included:
-# 1) Compute winner flip % (RQ3) and export winner_flip_summary.csv + per-seed winners
-# 2) P2 leaks ONLY scaling (no implicit global imputation). Uses nanmean/nanstd; keeps NaN; fold-imputer handles NaN.
-# 3) P3 fixed feature mapping (no index mismatch): P3 is explicitly "global transform + selection"
-#    - Fit GLOBAL preprocessor (impute+scale+onehot) on full data
-#    - Compute MI on global transformed space, select top-k indices
-#    - In CV, ALWAYS transform using the SAME global preprocessor, then select indices
-#    => Consistent feature space, no fold encoder mismatch. This does leak global transform; logged & saved.
-# 4) LeakageArtifacts saved to JSON per config (results/leakage_artifacts/*.json)
-# 5) Synthetic control runs BOTH Synthetic-clean and Synthetic-MISS (MCAR 15%) for P0 vs P1 (as in Idea)
-#
-# Datasets:
-#   A: full_analytic_dataset_mortality_all_admissions.csv (label_mortality, subject_id)
-#   B: Synthetic_Dataset_1500_Patients_precise.csv (TG4h top quartile label; optional id col)
-#
-# Run:
-#   python jcsse_audit_runner.py
-
 import os
 import json
 import time
@@ -1006,6 +986,9 @@ def compute_winner_flip(summary_df: pd.DataFrame, baseline_winners: pd.DataFrame
 # Main runner: Phase 1–3 locked to Idea
 # -----------------------
 def main():
+    import random
+    random.seed(0)
+    np.random.seed(0)
     config_log_path = os.path.join(RESULTS_DIR, "config_log.jsonl")
     metrics_path = os.path.join(RESULTS_DIR, "metrics_all.csv")
     summary_path = os.path.join(RESULTS_DIR, "summary_by_config.csv")
