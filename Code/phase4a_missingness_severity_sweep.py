@@ -1,15 +1,3 @@
-#  
-# ------------------------------------------------------------
-# Perturbation severity sweep (MCAR missingness 5/10/20/30%)
-# - Leakage-controlled evaluation (fold-safe imputation/scaling)
-# - Show when winner flip begins
-# - Define "robustness envelope" (max missing rate before instability)
-#
-# PATCH: Make Phase 4 winner selection CONSISTENT with Phase 1–3:
-#   Winner ranking key = (AUROC desc, AP desc, Brier asc)  [same as runner rank_key]
-#   -> adds Brier computation per fold, aggregates brier_mean, and uses the same rank_key.
-# ------------------------------------------------------------
-
 import os
 import json
 import numpy as np
@@ -355,6 +343,9 @@ def build_envelope(
 # MAIN SWEEP
 # ============================================================
 def main():
+    import random
+    random.seed(0)
+    np.random.seed(0)
     # Use runner's Dataset A loader (already normalizes + drops hadm_id/subject_id)
     X, y, groups, num_cols, cat_cols = load_dataset_A()
 
